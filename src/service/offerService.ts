@@ -77,7 +77,6 @@ export default class OfferService {
                 new: true,
                 runValidators: true,
             })
-            console.log('result', result)
             if (result) {
                 return { status: returnStatus.success, data: result }
             } else {

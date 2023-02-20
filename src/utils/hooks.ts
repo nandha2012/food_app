@@ -15,10 +15,8 @@ export function isEmpty(obj: any): boolean {
 export const useObjectID = (id: string) => {
     if (!isEmpty(id)) {
         if (ObjectId.isValid(id)) {
-            console.log('valid object ID')
             return new ObjectId(id)
         } else {
-            console.log('Invalid object ID')
             return ''
         }
     } else return ''
