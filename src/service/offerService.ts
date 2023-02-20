@@ -6,7 +6,11 @@ import logger from '../utils/logger'
 export default class OfferService {
     public async add(data: IOffer) {
         try {
-            const result = await OfferModel.create(data)
+            const result = await (
+                await (
+                    await OfferModel.create(data)
+                ).populate('Products.product')
+            ).populate('store')
             if (result) {
                 return { status: returnStatus.success, data: result }
             } else {
@@ -21,6 +25,8 @@ export default class OfferService {
     public async get(match = {}) {
         try {
             const result = await OfferModel.find(match)
+                .populate('products.product')
+                .populate('store')
             if (result) {
                 return { status: returnStatus.success, data: result }
             } else {
@@ -35,6 +41,8 @@ export default class OfferService {
     public async getById(id: any) {
         try {
             const result = await OfferModel.find(id)
+                .populate('products.product')
+                .populate('store')
 
             if (result) {
                 return { status: returnStatus.success, data: result }
@@ -77,6 +85,8 @@ export default class OfferService {
                 new: true,
                 runValidators: true,
             })
+                .populate('products.product')
+                .populate('store')
             if (result) {
                 return { status: returnStatus.success, data: result }
             } else {

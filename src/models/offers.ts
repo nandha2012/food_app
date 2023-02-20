@@ -24,7 +24,11 @@ const ProductOfferSchema = new Schema({
 })
 
 const offerSchema: Schema<IOffer> = new Schema({
-    store: { type: mongoose.Schema.Types.ObjectId, required: true },
+    store: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Stores',
+        required: true,
+    },
     products: [{ type: ProductOfferSchema, required: true }],
     type: { type: String, enum: ['dayOfWeek', 'dateRange'], required: true },
     daysOfWeek: [
