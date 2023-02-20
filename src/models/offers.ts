@@ -9,7 +9,7 @@ export interface IOffer extends Document {
     store: string | ObjectId
     products: IOfferProcducts[]
     type: 'dayOfWeek' | 'dateRange'
-    daysOfWeek?: string
+    daysOfWeek?: string[]
     startDate?: Date
     endDate?: Date
 }
@@ -60,7 +60,7 @@ offerSchema.pre<IOffer>('save', function (next) {
         this.startDate = undefined
         this.endDate = undefined
     } else if (this.type === 'dateRange') {
-        this.daysOfWeek = undefined
+        this.daysOfWeek = []
     }
     next()
 })

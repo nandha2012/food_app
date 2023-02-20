@@ -32,7 +32,7 @@ export default class OffersController {
     }
     public async get(req: Request, res: Response) {
         try {
-            const { type, dayOfWeek, startDate, endDate }: any = req.query.type
+            const { type, dayOfWeek, startDate, endDate }: any = req.query
 
             const filters: any = {}
             if (type) {
@@ -99,21 +99,29 @@ export default class OffersController {
     public async edit(req: Request, res: Response) {
         try {
             const data = req.body
-            const offerService: OfferService = new OfferService()
-            const result = await offerService.update(data)
-            if (result.status === returnStatus.success) {
-                return res.status(statusCode.success).json({
+            const id = req.params.id
+
+            if (useObjectID(id)) {
+                const offerService: OfferService = new OfferService()
+                const result = await offerService.update(id, data)
+                if (result.status === returnStatus.success) {
+                    return res.status(statusCode.success).json({
+                        data: result.data,
+                        message: 'success',
+                    })
+                }
+                return res.status(statusCode.badRequest).json({
                     data: result.data,
-                    message: 'success',
+                    message: result.message,
                 })
             }
             return res.status(statusCode.badRequest).json({
                 data: [],
-                message: 'failed',
+                message: 'invalid Id',
             })
         } catch (err: any) {
             logger.error(`error-OffersController-create : ${err.stack}`)
-
+            console.log(`offerService-update : ${err.stack}`)
             res.status(statusCode.internalServerError).json({
                 message: err.stack,
             })
@@ -121,18 +129,25 @@ export default class OffersController {
     }
     public async delete(req: Request, res: Response) {
         try {
-            const data = req.body
+            const id = req.params.id
+
             const offerService: OfferService = new OfferService()
-            const result = await offerService.delete(data)
-            if (result.status === returnStatus.success) {
-                return res.status(statusCode.success).json({
+            if (useObjectID(id)) {
+                const result = await offerService.delete(useObjectID(id))
+                if (result.status === returnStatus.success) {
+                    return res.status(statusCode.success).json({
+                        data: result.data,
+                        message: result.message,
+                    })
+                }
+                return res.status(statusCode.badRequest).json({
                     data: result.data,
-                    message: 'success',
+                    message: 'failed',
                 })
             }
             return res.status(statusCode.badRequest).json({
                 data: [],
-                message: 'failed',
+                message: 'invalid Id',
             })
         } catch (err: any) {
             logger.error(`error-OffersController-create : ${err.stack}`)

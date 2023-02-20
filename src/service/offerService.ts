@@ -51,20 +51,21 @@ export default class OfferService {
         }
     }
 
-    public async update(data: IOffer) {
+    public async update(id: any, data: any) {
         try {
             const updates = Object.keys(data)
             const allowedUpdates = [
-                'storeName',
+                'store',
                 'products',
                 'type',
-                'dayOfWeek',
+                'daysOfWeek',
                 'startDate',
                 'endDate',
             ]
             const isValidOperation = updates.every((update) =>
                 allowedUpdates.includes(update)
             )
+
             if (!isValidOperation) {
                 return {
                     status: returnStatus.failure,
@@ -72,11 +73,11 @@ export default class OfferService {
                     message: 'Invalid updates',
                 }
             }
-            const result = await OfferModel.findByIdAndUpdate(data.id, data, {
+            const result = await OfferModel.findByIdAndUpdate(id, data, {
                 new: true,
                 runValidators: true,
             })
-
+            console.log('result', result)
             if (result) {
                 return { status: returnStatus.success, data: result }
             } else {
@@ -88,12 +89,16 @@ export default class OfferService {
         }
     }
 
-    public async delete(data: IOffer) {
+    public async delete(id: any) {
         try {
-            const result = await OfferModel.findByIdAndDelete(data.id)
+            const result = await OfferModel.findByIdAndDelete(id)
 
             if (result) {
-                return { status: returnStatus.success, data: result }
+                return {
+                    status: returnStatus.success,
+                    data: result,
+                    message: 'deleted',
+                }
             } else {
                 return { status: returnStatus.failure, data: result }
             }
