@@ -12,6 +12,8 @@ export interface IOffer extends Document {
     daysOfWeek?: string[]
     startDate?: Date
     endDate?: Date
+    avalialbe_at?: String
+    ends_at?: String
 }
 
 const ProductOfferSchema = new Schema({
@@ -57,6 +59,8 @@ const offerSchema: Schema<IOffer> = new Schema({
             return this.type === 'dateRange'
         },
     },
+    avalialbe_at: { type: String, default: '00:00' },
+    ends_at: { type: String, default: '23:59' },
 })
 
 offerSchema.pre<IOffer>('save', function (next) {
