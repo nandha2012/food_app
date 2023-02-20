@@ -1,0 +1,46 @@
+{
+    "name": "food_app",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.ts",
+    "directories": {
+        "src": "src"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node dist/src/server.js",
+        "dev": "nodemon src/server.ts",
+        "build": "tsc"
+    },
+    "devDependencies": {
+        "@types/bcrypt": "^5.0.0",
+        "@types/cors": "^2.8.12",
+        "@types/express": "^4.17.14",
+        "@types/lodash": "^4.14.191",
+        "@types/luxon": "^3.2.0",
+        "@types/node": "^18.8.0",
+        "nodemon": "^2.0.20",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.8.4"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "lodash": "^4.17.21",
+        "mongoose": "^6.9.2",
+        "winston": "^3.8.2",
+        "winston-daily-rotate-file": "^4.7.1",
+        "yarn": "^1.22.19"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nandha2012/food_app.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/nandha2012/food_app/issues"
+    },
+    "homepage": "https://github.com/nandha2012/food_app#readme"
+}
